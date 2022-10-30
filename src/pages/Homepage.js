@@ -3,9 +3,27 @@ import LineChart from "../components/LineChart";
 import Navbar from "../components/Navbar";
 import PieChart from "../components/PieChart";
 import { ExpenseData, IncomeData, LineData } from "../Data";
+import axios from 'axios';
+
+
 
 
 export default function Homepage(){
+
+    // keep track of number
+    const [number_to_send, setNumb] = useState(0);
+
+    
+    // using axios to make a call to node server running on port 3005 with query num_sent = 4
+    function callService() {
+        axios.get(`http://localhost:3005/example?num_sent=4`)
+          .then(res => {
+            const num_rec = res.data;
+            // using useState to reset number from response recieved from node server
+            setNumb(num_rec)
+          })
+      }
+
     const [expensePieData, setexPieData] = useState({
         labels: ExpenseData.map((data) => data.name),
         datasets: [{
@@ -54,10 +72,14 @@ export default function Homepage(){
         </div>
         <div className="widget" id="bottom_line">
         <div style={{width: 900, height: 230}}><LineChart chartData={lineData} title='The Bottome Line*' ></LineChart>
-        <div>*Net Savings for month after expenses.</div>
+        </div>
+        <div className="widget">Micro-service example <br></br>
+          {/* When this button is clicked a call is made to callService */}
+          <button onClick={callService}>Call Service</button>
+          {/* whenever number_to_send is updated by setNumb, the page will be re-rendered */}
+          The service returned: {number_to_send}
         </div>
         </div>
-        
         </div>
     )
 }
