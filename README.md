@@ -19,4 +19,4 @@ Example receiving data:
             
           })
 
-<img src="/produce_sticker_micro/produce_micro.jpeg" title="Produce Sticker Microservice">
+<img src="/produce_micro.jpeg" title="Produce Sticker Microservice">
